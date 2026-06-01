@@ -1,0 +1,8 @@
+{
+  "mappings": [
+    "/content/abbvie-rinvoqhcp-blocks-eds/:/"
+  ],
+  "includes": [
+    "/content/abbvie-rinvoqhcp-blocks-eds/"
+  ]
+}
