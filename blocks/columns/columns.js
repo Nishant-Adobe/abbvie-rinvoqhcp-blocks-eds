@@ -1,26 +1,18 @@
-import { resolveImageReference } from '../../scripts/scripts.js';
-import decorateExternalLinksUtility from '../../scripts/utils.js';
-
 export default function decorate(block) {
-  const rowData = [...block.children];
-  const anchorId = rowData[0]?.textContent.trim();
-  if (anchorId) {
-    block.id = anchorId;
-    rowData[0]?.remove();
-  }
+  const cols = [...block.firstElementChild.children];
+  block.classList.add(`columns-${cols.length}-cols`);
 
-  rowData.forEach((item) => {
-    item.classList.add('columns-item');
-
-    [...item.children].forEach((cell) => {
-      resolveImageReference(cell);
-      if (cell.querySelector('picture, img')) {
-        cell.classList.add('columns-item-image');
-      } else {
-        cell.classList.add('columns-item-content');
+  // setup image columns
+  [...block.children].forEach((row) => {
+    [...row.children].forEach((col) => {
+      const pic = col.querySelector('picture');
+      if (pic) {
+        const picWrapper = pic.closest('div');
+        if (picWrapper && picWrapper.children.length === 1) {
+          // picture is only content in column
+          picWrapper.classList.add('columns-img-col');
+        }
       }
     });
   });
-
-  decorateExternalLinksUtility(block);
 }
